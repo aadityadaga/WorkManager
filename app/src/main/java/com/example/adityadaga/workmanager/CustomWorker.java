@@ -18,6 +18,10 @@ public class CustomWorker extends Worker {
     public static String saveFilePath;
 
     private WorkerResult mWorkerresult;
+    private String Year;
+    private String Month;
+    private String SMSID;
+    private String VCNumber;
 
 
     public CustomWorker() {
@@ -28,7 +32,12 @@ public class CustomWorker extends Worker {
     public WorkerResult doWork() {
 
         try {
-            mWorkerresult = downloadFile("https://www.random.in/Pages/DIY/Download-Soa-Pdf.aspx?year=2018&month=01&smsid=17344166&vcnumber=01517349464", "" + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+             Year = getInputData().getString("Year", "");
+             Month = getInputData().getString("Month", "");
+             SMSID = getInputData().getString("SMSID", "");
+            VCNumber =getInputData().getString("VCNumber", "");
+            System.out.println("https://www.random.in/Pages/DIY/Download-Soa-Pdf.aspx?year="+Year+"&month="+Month+"&smsid="+SMSID+"&vcnumber="+VCNumber);
+            mWorkerresult = downloadFile("https://www.dishtv.in/Pages/DIY/Download-Soa-Pdf.aspx?year="+Year+"&month="+Month+"&smsid="+SMSID+"&vcnumber="+VCNumber, "" + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
         } catch (IOException e) {
             e.printStackTrace();
         }

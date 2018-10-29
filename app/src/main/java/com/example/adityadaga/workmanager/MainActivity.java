@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -40,15 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnDownload:
-                OneTimeWorkRequest simpleRequest = new OneTimeWorkRequest.Builder(CustomWorker.class).build();
+                OneTimeWorkRequest simpleRequest = new OneTimeWorkRequest.Builder(CustomWorker.class).setInputData(CreateInputData()).build();
                 WorkManager.getInstance().enqueue(simpleRequest);
                 WorkManager.getInstance().getStatusById(simpleRequest.getId()).observe(this, new Observer<WorkStatus>() {
                     @Override
                     public void onChanged(@Nullable WorkStatus workStatus) {
-                        switch (workStatus.getState()){
+                        switch (workStatus.getState()) {
 
                             case RUNNING:
                                 mProgressDialog.setMessage("Downloading...");
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                                 break;
                             case FAILED:
-                                Toast.makeText(MainActivity.this, "Unable to Download",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Unable to Download", Toast.LENGTH_SHORT).show();
                                 mProgressDialog.dismiss();
                                 break;
                         }
@@ -101,18 +102,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                                 break;
                             case FAILED:
-                                Toast.makeText(MainActivity.this, "Unable to Download",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Unable to Download", Toast.LENGTH_SHORT).show();
                                 mProgressDialog.dismiss();
                                 break;
+
                         }
                     }
                 });
                 break;
         }
 
+    }
 
-
-
+    Data CreateInputData() {
+        return new Data.Builder()
+                .putString("Year", String.valueOf(2018))
+                .putString("Month", String.valueOf(1)).
+                        putString("VCNumber", "01517349464").
+                        putString("SMSID", "17344166")
+                .build();
     }
 
 
