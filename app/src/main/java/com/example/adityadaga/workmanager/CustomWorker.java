@@ -35,7 +35,7 @@ public class CustomWorker extends Worker {
     public WorkerResult doWork() {
 
         try {
-       mWorkerresult =   downloadFile("https://www.dishtv.in/Pages/DIY/Download-Soa-Pdf.aspx?year=2018&month=01&smsid=17344166&vcnumber=01517349464","" + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+       mWorkerresult =   downloadFile("https://www.random.in/Pages/DIY/Download-Soa-Pdf.aspx?year=2018&month=01&smsid=17344166&vcnumber=01517349464","" + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
         } catch (IOException e) {
             e.printStackTrace();
         }
